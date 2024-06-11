@@ -116,7 +116,7 @@ function check_damage() {
 </script>
 
 <template>
-    <div v-if="game_over.value == false" id="main" @pointermove="moveHero">
+    <div v-if="game_over.value == false" id="main" @touchmove="moveHero">
         <div id="counter">{{ coins.value }}</div>
         <div id="spaceship"></div>
     </div>
