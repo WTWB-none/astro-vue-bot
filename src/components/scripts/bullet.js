@@ -1,5 +1,5 @@
 export class Bullet{
-    speed = 5;
+    speed = 2;
     position_x;
     starting_point;
     id;

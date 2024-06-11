@@ -1,6 +1,6 @@
 
 export class Villain{
-    speed = 32;
+    speed = 2;
     start_position_x = 0;
     start_position_y = 0;
     id;

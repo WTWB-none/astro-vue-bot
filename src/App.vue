@@ -42,7 +42,7 @@ setInterval(function change_enemy_position() {
         z.style.top = enemy_arr.enemies[i].start_position_y + "px";
         check_damage();
     }
-}, 1000);
+}, 31);
 
 setInterval(function check_overflow() {
     let villains = document.getElementsByClassName("enemy");
@@ -84,7 +84,7 @@ setInterval(function move_bullets() {
             bullet_arr.bullets.shift();
         }
     }
-}, 1000);
+}, 31);
 
 function check_damage() {
     for (let i = 0; i < bullet_arr.bullets.length; i++) {
