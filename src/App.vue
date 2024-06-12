@@ -9,6 +9,7 @@ const bullet_arr = reactive({ bullets: [] });
 const game_over = reactive({ value: false });
 const enemy_numbers = reactive({ value: 0 });
 const bullet_numbers = reactive({ value: 0 });
+const data = reactive({value: ""});
 
 // onMounted(async function get_user_data(){
 //     let user_data = window.Telegram.WebApp.initData;
@@ -18,7 +19,7 @@ const bullet_numbers = reactive({ value: 0 });
 // });
 
 async function moveHero(e) {
-    console.log(window.Telegram.WebApp.initData);
+    data.value = window.Telegram.WebApp.initData;
     var hero = document.getElementById("spaceship");
     if (e.clientX){
         hero.style.left = e.clientX - 32 + "px";
@@ -131,7 +132,7 @@ function check_damage() {
 <template>
     <div v-if="game_over.value == false" id="main" @pointermove="moveHero">
         <div id="counter">{{ coins.value }}</div>
-        <div id="spaceship"></div>
+        <div id="spaceship">{{ data.value }}</div>
     </div>
 </template>
 
