@@ -2,24 +2,19 @@
 import { onBeforeMount, onMounted, reactive } from "vue";
 import { Villain } from "./components/scripts/villain.js";
 import { Bullet } from "./components/scripts/bullet.js";
+import { createClient } from "@supabase/supabase-js";
 
-const coins = reactive({ value: 0 });
+const coins = reactive({ value:  0});
 const enemy_arr = reactive({ enemies: [] });
 const bullet_arr = reactive({ bullets: [] });
 const game_over = reactive({ value: false });
 const enemy_numbers = reactive({ value: 0 });
 const bullet_numbers = reactive({ value: 0 });
 const data = reactive({value: ""});
-
-// onMounted(async function get_user_data(){
-//     let user_data = window.Telegram.WebApp.initData;
-//     console.log(user_data);
-//     coins.value = await sql('select coins where user_id = ${ user_id }');
-//     console.log(coins);
-// });
+const client = createClient('https://qqrpgwergaafufadjxic.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxcnBnd2VyZ2FhZnVmYWRqeGljIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxODE4OTYyMSwiZXhwIjoyMDMzNzY1NjIxfQ.jucj-WHPsaaS4BnwDdqJnZl3WD5RSB8SRzZ4HoceZik');
 
 async function moveHero(e) {
-    data.value = window.Telegram.WebApp.initDataUnsafe.user.username;
+    // data.value = window.Telegram.WebApp.initDataUnsafe.user.username;
     var hero = document.getElementById("spaceship");
     if (e.clientX){
         hero.style.left = e.clientX - 32 + "px";
@@ -29,6 +24,14 @@ async function moveHero(e) {
         hero.style.left = e.touches[0].clientX;
     }
 }
+
+
+
+onMounted(async function getCoins() {
+    let {data, error} = await client.from('Users').select('coins').eq('user_id', window.Telegram.WebApp.initDataUnsafe.User.username);
+    coins.value = parseInt(data[0].coins);
+});
+
 
 setInterval(function spawn_enemy() {
     if (
@@ -132,7 +135,7 @@ function check_damage() {
 <template>
     <div v-if="game_over.value == false" id="main" @pointermove="moveHero">
         <div id="counter">{{ coins.value }}</div>
-        <div id="spaceship"> {{ data.value }} </div>
+        <div id="spaceship"></div>
     </div>
 </template>
 
