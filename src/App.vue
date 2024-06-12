@@ -13,23 +13,16 @@ const bullet_numbers = reactive({ value: 0 });
 const user = reactive({value: ""});
 const client = createClient('https://qqrpgwergaafufadjxic.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxcnBnd2VyZ2FhZnVmYWRqeGljIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxODE4OTYyMSwiZXhwIjoyMDMzNzY1NjIxfQ.jucj-WHPsaaS4BnwDdqJnZl3WD5RSB8SRzZ4HoceZik');
 
-async function moveHero(e) {
-    var hero = document.getElementById("spaceship");
-    if (e.clientX){
-        hero.style.left = e.clientX - 32 + "px";
-        // hero.style.top = e.clientY+"px";
-    }
-    else{
-        hero.style.left = e.touches[0].clientX;
-    }
-}
-
-
-
 onMounted(async function getCoins() {
     user.value = window.Telegram.WebApp.initDataUnsafe.user.username;
     let {data, error} = await client.from('Users').select('coins').eq('user_id', user.value);
-    coins.value = parseInt(data[0].coins);
+    if (data != []){
+        coins.value = parseInt(data[0].coins);
+    }
+    else{
+        let {data, error } = await client.from('Users').insert([{user_id: user.value}, {coins: 0}]).select();
+        getCoins();
+    }
 });
 
 
@@ -103,6 +96,17 @@ setInterval(function move_bullets() {
     }
 }, 31);
 
+async function moveHero(e) {
+    var hero = document.getElementById("spaceship");
+    if (e.clientX){
+        hero.style.left = e.clientX - 32 + "px";
+        // hero.style.top = e.clientY+"px";
+    }
+    else{
+        hero.style.left = e.touches[0].clientX;
+    }
+}
+
 function check_damage() {
     for (let i = 0; i < bullet_arr.bullets.length; i++) {
         for (let j = 0; j < enemy_arr.enemies.length; j++) {
@@ -135,7 +139,7 @@ function check_damage() {
 <template>
     <div v-if="game_over.value == false" id="main" @pointermove="moveHero">
         <div id="counter">{{ coins.value }}</div>
-        <div id="spaceship">{{ user.value }}</div>
+        <div id="spaceship"></div>
     </div>
 </template>
 
