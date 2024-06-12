@@ -19,7 +19,7 @@ const data = reactive({value: ""});
 // });
 
 async function moveHero(e) {
-    data.value = window.Telegram.WebApp.initData;
+    data.value = window.Telegram.WebApp.initDataUnsafe.user;
     var hero = document.getElementById("spaceship");
     if (e.clientX){
         hero.style.left = e.clientX - 32 + "px";
@@ -132,7 +132,7 @@ function check_damage() {
 <template>
     <div v-if="game_over.value == false" id="main" @pointermove="moveHero">
         <div id="counter">{{ coins.value }}</div>
-        <div id="spaceship">{{ data.value }}</div>
+        <div id="spaceship"></div>
     </div>
 </template>
 
