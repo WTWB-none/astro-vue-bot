@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { onBeforeMount, onMounted, reactive } from "vue";
 import { Villain } from "./components/scripts/villain.js";
 import { Bullet } from "./components/scripts/bullet.js";
 
@@ -10,10 +10,23 @@ const game_over = reactive({ value: false });
 const enemy_numbers = reactive({ value: 0 });
 const bullet_numbers = reactive({ value: 0 });
 
+// onMounted(async function get_user_data(){
+//     let user_data = window.Telegram.WebApp.initData;
+//     console.log(user_data);
+//     coins.value = await sql('select coins where user_id = ${ user_id }');
+//     console.log(coins);
+// });
+
 async function moveHero(e) {
+    console.log(window.Telegram.WebApp.initData);
     var hero = document.getElementById("spaceship");
-    hero.style.left = e.clientX - 32 + "px";
-    // hero.style.top = e.clientY+"px";
+    if (e.clientX){
+        hero.style.left = e.clientX - 32 + "px";
+        // hero.style.top = e.clientY+"px";
+    }
+    else{
+        hero.style.left = e.touches[0].clientX;
+    }
 }
 
 setInterval(function spawn_enemy() {
