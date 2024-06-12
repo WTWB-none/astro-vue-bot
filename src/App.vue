@@ -132,7 +132,7 @@ function check_damage() {
 <template>
     <div v-if="game_over.value == false" id="main" @pointermove="moveHero">
         <div id="counter">{{ coins.value }}</div>
-        <div id="spaceship"></div>
+        <div id="spaceship"> {{ data.value }} </div>
     </div>
 </template>
 
