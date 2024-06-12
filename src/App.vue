@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { Villain } from "./components/scripts/villain.js";
 import { Bullet } from "./components/scripts/bullet.js";
 import { createClient } from "@supabase/supabase-js";
