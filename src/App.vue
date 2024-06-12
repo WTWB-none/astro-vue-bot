@@ -19,7 +19,7 @@ const data = reactive({value: ""});
 // });
 
 async function moveHero(e) {
-    data.value = window.Telegram.WebApp.initDataUnsafe.user;
+    data.value = window.Telegram.WebApp.initDataUnsafe.user.username;
     var hero = document.getElementById("spaceship");
     if (e.clientX){
         hero.style.left = e.clientX - 32 + "px";
