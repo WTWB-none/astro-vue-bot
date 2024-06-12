@@ -10,11 +10,10 @@ const bullet_arr = reactive({ bullets: [] });
 const game_over = reactive({ value: false });
 const enemy_numbers = reactive({ value: 0 });
 const bullet_numbers = reactive({ value: 0 });
-const data = reactive({value: ""});
+const user = reactive({value: ""});
 const client = createClient('https://qqrpgwergaafufadjxic.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFxcnBnd2VyZ2FhZnVmYWRqeGljIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxODE4OTYyMSwiZXhwIjoyMDMzNzY1NjIxfQ.jucj-WHPsaaS4BnwDdqJnZl3WD5RSB8SRzZ4HoceZik');
 
 async function moveHero(e) {
-    // data.value = window.Telegram.WebApp.initDataUnsafe.user.username;
     var hero = document.getElementById("spaceship");
     if (e.clientX){
         hero.style.left = e.clientX - 32 + "px";
@@ -28,7 +27,8 @@ async function moveHero(e) {
 
 
 onMounted(async function getCoins() {
-    let {data, error} = await client.from('Users').select('coins').eq('user_id', window.Telegram.WebApp.initDataUnsafe.User.username);
+    user.value = window.Telegram.WebApp.initDataUnsafe.user.username;
+    let {data, error} = await client.from('Users').select('coins').eq('user_id', user.value);
     coins.value = parseInt(data[0].coins);
 });
 
@@ -135,7 +135,7 @@ function check_damage() {
 <template>
     <div v-if="game_over.value == false" id="main" @pointermove="moveHero">
         <div id="counter">{{ coins.value }}</div>
-        <div id="spaceship"></div>
+        <div id="spaceship">{{ user.value }}</div>
     </div>
 </template>
 
