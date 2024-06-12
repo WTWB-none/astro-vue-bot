@@ -16,11 +16,15 @@ const client = createClient('https://qqrpgwergaafufadjxic.supabase.co', 'eyJhbGc
 onMounted(async function getCoins() {
     user.value = window.Telegram.WebApp.initDataUnsafe.user.username;
     let {data, error} = await client.from('Users').select('coins').eq('user_id', user.value);
-    if (data != []){
+    console.log(data);
+    if (data.length != 0){
         coins.value = parseInt(data[0].coins);
     }
     else{
-        let {data, error } = await client.from('Users').insert([{user_id: user.value}, {coins: 0}]).select();
+        let {data, err} = await client.from('Users').select('coins');
+        let id_c = data.length + 1;
+        let error = await client.from('Users').insert([{id: id_c, user_id: user.value, coins: 0}]);
+        console.log(error);
         getCoins();
     }
 });
