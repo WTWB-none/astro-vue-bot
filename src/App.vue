@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, onUnmounted, reactive } from "vue";
 import { Villain } from "./components/scripts/villain.js";
 import { Bullet } from "./components/scripts/bullet.js";
 import { createClient } from "@supabase/supabase-js";
@@ -29,6 +29,9 @@ onMounted(async function getCoins() {
     }
 });
 
+onUnmounted(async function push_coin_changes(){
+    let error = await client.from('Users').update({coins: parseInt(coins.value)}).eq('user_id', user.value);
+});
 
 setInterval(function spawn_enemy() {
     if (
