@@ -209,5 +209,6 @@ function check_damage() {
     font-size: 22px;
     color: gold;
     border: 3px solid gold;
+    border-radius: 7px;
 }
 </style>
