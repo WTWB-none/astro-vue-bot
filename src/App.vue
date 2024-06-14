@@ -29,9 +29,9 @@ onMounted(async function getCoins() {
     }
 });
 
-onUnmounted(async function push_coin_changes(){
+async function push_coin_changes(){
     let error = await client.from('Users').update({coins: parseInt(coins.value)}).eq('user_id', user.value);
-});
+}
 
 setInterval(function spawn_enemy() {
     if (
@@ -137,6 +137,7 @@ function check_damage() {
                     .namedItem(bullet_arr.bullets[i].id)
                     .remove();
                 bullet_arr.bullets.splice(i, 1);
+                push_coin_changes();
             }
         }
     }
