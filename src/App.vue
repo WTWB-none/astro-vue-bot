@@ -178,6 +178,7 @@ function check_damage() {
     background-image: url("./assets/spaceship.png");
     opacity: 100%;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .enemy {
