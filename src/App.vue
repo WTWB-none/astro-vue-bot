@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { Villain } from "./components/scripts/villain.js";
 import { Bullet } from "./components/scripts/bullet.js";
 import { createClient } from "@supabase/supabase-js";
@@ -16,12 +16,13 @@ const client = createClient('https://qqrpgwergaafufadjxic.supabase.co', 'eyJhbGc
 onMounted(async function getCoins() {
     user.value = window.Telegram.WebApp.initDataUnsafe.user.username;
     let {data, error} = await client.from('Users').select('coins').eq('user_id', user.value);
-    console.log(data);
+    console.log(error);
     if (data.length != 0){
         coins.value = parseInt(data[0].coins);
     }
     else{
         let {data, err} = await client.from('Users').select('coins');
+        console.log(err);
         let id_c = data.length + 1;
         let error = await client.from('Users').insert([{id: id_c, user_id: user.value, coins: 0}]);
         console.log(error);
@@ -31,6 +32,7 @@ onMounted(async function getCoins() {
 
 async function push_coin_changes(){
     let error = await client.from('Users').update({coins: parseInt(coins.value)}).eq('user_id', user.value);
+    console.log(error);
 }
 
 setInterval(function spawn_enemy() {
