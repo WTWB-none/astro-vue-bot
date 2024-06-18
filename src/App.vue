@@ -49,8 +49,7 @@ setInterval(function spawn_enemy() {
         enemy.classList.add("enemy");
         enemy.id = x.id;
         let gen_asset = Math.round((1+(Math.random()*(3))))
-        console.log('url("./assets/asteroid-'+gen_asset+'.png")')
-        enemy.style.backgroundImage = 'url("/src/assets/asteroid-'+gen_asset+'.png")';
+        enemy.style.backgroundImage = 'url(./src/assets/asteroid-'+gen_asset+'.png)';
         enemy.style.left = x.start_position_x + "px";
         document.getElementById("main").appendChild(enemy);
     }
