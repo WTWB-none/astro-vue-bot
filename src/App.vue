@@ -49,7 +49,21 @@ setInterval(function spawn_enemy() {
         enemy.classList.add("enemy");
         enemy.id = x.id;
         let gen_asset = Math.round((1+(Math.random()*(3))))
-        enemy.style.backgroundImage = 'url(./assets/asteroid-'+gen_asset+'.png)';
+        switch (gen_asset){
+            case 1:
+                enemy.style.filter = "hue-rotate(300deg)";
+                break;
+            case 2:
+                enemy.style.filter = "hue-rotate(200deg)";
+                break;
+            case 3:
+                enemy.style.filter = "hue-rotate(100deg)";
+                break;
+            case 4:
+                enemy.style.filter = "hue-rotate(350deg)";
+                break;
+        }
+        
         enemy.style.left = x.start_position_x + "px";
         document.getElementById("main").appendChild(enemy);
     }
@@ -195,7 +209,7 @@ function check_damage() {
     top: 0px;
     z-index: 100;
     background-size: cover;
-    /* background-image: url("./assets/asteroid.png"); */
+    background-image: url("./assets/asteroid.png");
 }
 
 .bullet {
