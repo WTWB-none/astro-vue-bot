@@ -48,7 +48,10 @@ setInterval(function spawn_enemy() {
         const enemy = document.createElement("div");
         enemy.classList.add("enemy");
         enemy.id = x.id;
-        enemy.style = "left: " + x.start_position_x + "px;";
+        let gen_asset = Math.round((1+(Math.random()*(3))))
+        console.log('url("./assets/asteroid-'+gen_asset+'.png")')
+        enemy.style.backgroundImage = 'url("/src/assets/asteroid-'+gen_asset+'.png")';
+        enemy.style.left = x.start_position_x + "px";
         document.getElementById("main").appendChild(enemy);
     }
 }, 1000);
@@ -66,7 +69,7 @@ setInterval(function change_enemy_position() {
 setInterval(function check_overflow() {
     let villains = document.getElementsByClassName("enemy");
     for (let i = 0; i < enemy_arr.enemies.length; i++) {
-        if (enemy_arr.enemies[i].start_position_y >= window.innerHeight - 32) {
+        if (enemy_arr.enemies[i].start_position_y >= window.innerHeight - 213.6) {
             villains.namedItem(enemy_arr.enemies[i].id).remove();
             enemy_arr.enemies.splice(i, 1);
         }
@@ -84,7 +87,7 @@ setInterval(function spawn_bullet() {
         const bullet = document.createElement("div");
         bullet.classList.add("bullet");
         bullet.id = x.id;
-        bullet.style.left = x.position_x + 32 + "px";
+        bullet.style.left = x.position_x + 44 + "px";
         bullet.style.top = x.starting_point + "px";
         document.getElementById("main").appendChild(bullet);
     }
@@ -108,7 +111,7 @@ setInterval(function move_bullets() {
 async function moveHero(e) {
     var hero = document.getElementById("spaceship");
     if (e.clientX){
-        hero.style.left = e.clientX - 32 + "px";
+        hero.style.left = e.clientX - 44 + "px";
         // hero.style.top = e.clientY+"px";
     }
     else{
@@ -122,11 +125,11 @@ function check_damage() {
             if (
                 bullet_arr.bullets[i] != undefined &&
                 bullet_arr.bullets[i].position_x >=
-                    enemy_arr.enemies[j].start_position_x - 32 &&
+                    enemy_arr.enemies[j].start_position_x - 44 &&
                 bullet_arr.bullets[i].position_x <=
-                    enemy_arr.enemies[j].start_position_x + 32 &&
+                    enemy_arr.enemies[j].start_position_x + 44 &&
                 bullet_arr.bullets[i].starting_point <=
-                    enemy_arr.enemies[j].start_position_y + 32
+                    enemy_arr.enemies[j].start_position_y + 44
             ) {
                 coins.value += 1;
                 document
@@ -158,7 +161,8 @@ function check_damage() {
     min-width: 100%;
     max-width: 100%;
     height: 100vh;
-    background-image: url("./assets/background.jpg");
+    background-image: url("./assets/background.png");
+    background-size: cover;
     overflow: hidden;
 }
 #main {
@@ -172,32 +176,36 @@ function check_damage() {
 }
 
 #spaceship {
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 113.6px;
     cursor: pointer;
     position: absolute;
     bottom: 0px;
     background-image: url("./assets/spaceship.png");
+    background-size: cover;
     opacity: 100%;
+    z-index: 88;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
 
 .enemy {
     position: absolute;
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 88px;
     top: 0px;
-    background-image: url("./assets/asteroid.png");
+    z-index: 100;
+    background-size: cover;
+    /* background-image: url("./assets/asteroid.png"); */
 }
 
 .bullet {
     position: absolute;
-    width: 13px;
-    height: 13px;
+    width: 10px;
+    height: 75.6px;
     background-size: cover;
     background-image: url("./assets/bullet.png");
-    z-index: 100;
+    z-index: 50;
 }
 
 #counter {

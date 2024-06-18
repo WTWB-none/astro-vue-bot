@@ -5,9 +5,9 @@ export class Bullet{
     id;
 
     constructor(point){
-        this.starting_point = window.innerHeight-80;
+        this.starting_point = window.innerHeight-135.6;
         point = point.substring(0, point.length-2);
-        this.position_x = parseFloat(point) - 5;
+        this.position_x = parseFloat(point)-5;
     }
 
     set_id(id){
